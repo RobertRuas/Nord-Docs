@@ -1,0 +1,166 @@
+{
+  "titulo": "INVOICE",
+  "emissor": [
+    {
+      "rotulo": "Technician Name:",
+      "valor": "A. Example"
+    },
+    {
+      "rotulo": "Company Name:",
+      "valor": "A. Example"
+    },
+    {
+      "rotulo": "Email:",
+      "valor": "contact@example.com"
+    },
+    {
+      "rotulo": "Address:",
+      "valor": "Example Street 1, 1000-001 Lisboa, Portugal"
+    },
+    {
+      "rotulo": "VAT:",
+      "valor": "000 000 000"
+    },
+    {
+      "rotulo": "Tel:",
+      "valor": "+351 900 000 000"
+    }
+  ],
+  "pagamento": [
+    {
+      "rotulo": "IBAN Name:",
+      "valor": "A. Example"
+    },
+    {
+      "rotulo": "IBAN:",
+      "valor": "PT50 0000 0000 0000 0000 0000 0"
+    },
+    {
+      "rotulo": "SWIFT / BIC:",
+      "valor": "EXAMPLXX"
+    },
+    {
+      "rotulo": "Currency:",
+      "valor": "EUR"
+    }
+  ],
+  "fatura": [
+    {
+      "rotulo": "Inovice Number:",
+      "valor": "014"
+    },
+    {
+      "rotulo": "Invoice Date:",
+      "valor": "08/11/2026"
+    },
+    {
+      "rotulo": "Billing Period:",
+      "valor": "11/10/2026 to 08/11/2026"
+    }
+  ],
+  "destinatario": {
+    "titulo": "Invoice to:",
+    "endereco": "Example Client Oy - Example Road 26 - 00000 Example City, Finland",
+    "contato": "Contact: www.example.com | info@example.com  | Tel: +358 (0)00 000 0000"
+  },
+  "projetos": {
+    "titulo": "Projects Details:",
+    "colunas": [
+      {
+        "chave": "nome",
+        "titulo": "Name"
+      },
+      {
+        "chave": "funcao",
+        "titulo": "Role"
+      },
+      {
+        "chave": "inicio",
+        "titulo": "Start Date"
+      },
+      {
+        "chave": "fim",
+        "titulo": "End Date"
+      },
+      {
+        "chave": "local",
+        "titulo": "Location"
+      }
+    ],
+    "linhas": [
+      {
+        "nome": "SCOPE 0001/0002",
+        "funcao": "TL IRATA L3",
+        "inicio": "11/10/2026",
+        "fim": "08/11/2026",
+        "local": "Germany"
+      },
+      {
+        "nome": "-",
+        "funcao": "-",
+        "inicio": "-",
+        "fim": "-",
+        "local": "-"
+      }
+    ]
+  },
+  "custos": {
+    "titulo": "Work & Cost Breakdown:",
+    "colunas": [
+      {
+        "chave": "descricao",
+        "titulo": "Description"
+      },
+      {
+        "chave": "quantidade",
+        "titulo": "Quantity"
+      },
+      {
+        "chave": "taxa",
+        "titulo": "Rate (€)"
+      },
+      {
+        "chave": "valor",
+        "titulo": "Amount (€)"
+      }
+    ],
+    "linhas": [
+      {
+        "descricao": "Travel Days",
+        "quantidade": "2",
+        "taxa": "150,0",
+        "valor": "300,0"
+      },
+      {
+        "descricao": "Per Diem",
+        "quantidade": "20",
+        "taxa": "50,0",
+        "valor": "1000,0"
+      },
+      {
+        "descricao": "Expenses",
+        "quantidade": "1",
+        "taxa": "N/A",
+        "valor": "100,0"
+      }
+    ],
+    "total": {
+      "rotulo": "Total:",
+      "valor": "1400,0"
+    }
+  },
+  "confirmacao": {
+    "titulo": "I confirm that:",
+    "itens": [
+      "• The above work was performed during the stated invoice period",
+      "• All project entries are accurate",
+      "• Rates are according to my contract"
+    ]
+  },
+  "assinatura": {
+    "linha": "Signature: _____________________________________",
+    "dataRotulo": "Date:",
+    "dataValor": "",
+    "dataAutomatica": true
+  }
+}

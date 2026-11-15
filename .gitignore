@@ -1,0 +1,6 @@
+# Arquivos do Finder (macOS)
+.DS_Store
+
+# Dados reais mantidos apenas na maquina local.
+# Veja a secao "Dados de exemplo" do README.
+*.local.json

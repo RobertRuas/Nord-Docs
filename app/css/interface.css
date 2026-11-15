@@ -1,0 +1,161 @@
+/* ============================================================================
+   interface.css - barra de ferramentas da pagina
+   ----------------------------------------------------------------------------
+   Estilos de tudo que NAO faz parte do documento: a barra do topo, os botoes
+   e o aviso de alteracoes.
+
+   Tudo aqui desaparece na impressao (e, portanto, no PDF gerado), para que
+   o arquivo final contenha apenas o documento.
+   ============================================================================ */
+
+:root {
+  --interface-fonte: "Segoe UI", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  --interface-fundo: rgba(255, 255, 255, .96);
+  --interface-borda: #9a9a9a;
+  --interface-destaque: #1f6fc4;
+  --interface-erro: #b3261e;
+}
+
+/* ----------------------------------------------------------------------------
+   Barra do topo
+   -------------------------------------------------------------------------- */
+.barra-ferramentas {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 16px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--interface-fundo);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+  font-family: var(--interface-fonte);
+  font-size: 13px;
+  user-select: none;
+}
+
+/* Separador vertical entre grupos de botoes */
+.separador-barra {
+  width: 1px;
+  height: 20px;
+  background: #c8c8c8;
+}
+
+/* ----------------------------------------------------------------------------
+   Botoes
+   -------------------------------------------------------------------------- */
+.botao-barra {
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--interface-borda);
+  border-radius: 5px;
+  background: #f4f4f4;
+  color: #1a1a1a;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.botao-barra:hover:not(:disabled)  { background: #e4e4e4; }
+.botao-barra:active:not(:disabled) { background: #d4d4d4; }
+
+.botao-barra:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+/* Botao de um recurso ligado no momento (ex.: modo de edicao ativo) */
+.botao-barra.botao-ativo {
+  border-color: var(--interface-destaque);
+  background: var(--interface-destaque);
+  color: #ffffff;
+}
+
+/* Link de volta para a pagina de modelos */
+.link-voltar {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 5px;
+  color: #1a1a1a;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.link-voltar:hover { background: #e4e4e4; }
+
+/* ----------------------------------------------------------------------------
+   Aviso de estado (alteracoes pendentes, mensagens de importacao/exportacao)
+   -------------------------------------------------------------------------- */
+.aviso-barra {
+  max-width: 320px;
+  padding: 0 4px;
+  color: #6a6a6a;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.aviso-barra.visivel { opacity: 1; }
+
+.aviso-barra.aviso-erro-texto {
+  color: var(--interface-erro);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------------------------
+   Faixa de aviso do documento (ex.: semana invalida na planilha)
+   Fica logo abaixo da barra e some quando nao ha nada a avisar.
+   -------------------------------------------------------------------------- */
+.faixa-aviso {
+  display: none;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 16px;
+  padding: 8px 14px;
+  border: 1px solid #e0b4b0;
+  border-radius: 6px;
+  background: #fdf2f1;
+  color: #8c1d18;
+  font-family: var(--interface-fonte);
+  font-size: 13px;
+}
+
+.faixa-aviso.visivel {
+  display: block;
+}
+
+/* ----------------------------------------------------------------------------
+   Aviso exibido quando o dados.json nao pode ser lido
+   -------------------------------------------------------------------------- */
+.aviso-falha {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .25);
+  font-family: var(--interface-fonte);
+  line-height: 1.5;
+}
+
+.aviso-falha h1 { margin: 0 0 16px; font-size: 18px; }
+.aviso-falha p  { margin: 0 0 12px; font-size: 14px; }
+
+/* ----------------------------------------------------------------------------
+   Impressao - a interface nunca entra no PDF
+   -------------------------------------------------------------------------- */
+@media print {
+  .barra-ferramentas,
+  .faixa-aviso {
+    display: none !important;
+  }
+}

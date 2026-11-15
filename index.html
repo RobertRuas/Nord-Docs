@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--
+    ============================================================================
+    PAGINA CENTRAL - escolha do modelo
+    ============================================================================
+    Esta e a porta de entrada do projeto. A lista de modelos e lida de
+    modelos/catalogo.json, entao acrescentar um documento novo nao exige
+    mexer em nenhum codigo: basta criar a pasta em /modelos e incluir a
+    entrada no catalogo.
+
+    Arvore do projeto:
+
+      index.html        esta pagina
+      abrir.command     sobe o servidor local e abre esta pagina
+      LEIAME.md         mapa completo do projeto
+
+      app/              a aplicacao, compartilhada por todos os modelos
+        css/            interface, modo de edicao e esta pagina
+        js/             nucleo: carregar, editar, importar/exportar, PDF
+        tipos/          o desenho de cada TIPO de documento
+          fatura/       usado pelos dois invoices
+          planilha/     usado pelo timesheet
+
+      modelos/          um diretorio por documento
+        catalogo.json   a lista que esta pagina le
+        invoice-despesas/    dados.json + index.html + modelo.js + variacao.css
+        invoice-horas/    idem
+        timesheet/      dados.json + index.html + modelo.js + imagens/
+
+      originais/        os arquivos Word e Excel que deram origem a tudo
+    ============================================================================
+  -->
+
+  <title>Nordic Access - Documentos</title>
+  <link rel="stylesheet" href="app/css/central.css">
+</head>
+
+<body>
+
+<header class="cabecalho-central">
+  <h1 id="titulo-central">Documentos</h1>
+  <p id="descricao-central"></p>
+</header>
+
+<!-- Os cartoes sao gerados por app/js/central.js -->
+<main class="lista-modelos" id="lista-modelos"></main>
+
+<footer class="rodape-central">
+  <p>
+    Desenvolvido por <strong>Robert Ruas</strong> &middot;
+    <a href="mailto:92ruas@gmail.com">92ruas@gmail.com</a>
+  </p>
+</footer>
+
+<script type="module" src="app/js/central.js"></script>
+</body>
+</html>

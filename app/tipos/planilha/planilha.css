@@ -1,0 +1,334 @@
+/* ============================================================================
+   WEEKLY TIMESHEET - folha de estilos
+   ----------------------------------------------------------------------------
+   Medidas e cores convertidas do XML do arquivo .xlsx:
+
+     - largura de coluna: o Excel guarda em "caracteres".
+                          Conversao usada: px = caracteres * 7 + 5
+     - altura de linha:   o Excel guarda em pontos, usados aqui como "pt".
+     - cor do cabecalho:  tema "Office", accent6 (#4EA72E) clareado em 80%
+                          (tint 0,8) -> #D9F2D0
+     - bordas "thin":     1px solido preto
+     - borda do titulo:   "medium" na cor #92D050
+
+   Para ajustar o documento, prefira mudar as variaveis do bloco :root.
+   ============================================================================ */
+
+:root {
+  /* ----- Tipografia ----------------------------------------------------- */
+  --fonte: Calibri, Carlito, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --fonte-tamanho: 12pt;        /* praticamente todas as celulas usam 12pt */
+  --fonte-titulo: 26pt;         /* celula A1 */
+  --cor-texto: #000000;
+
+  /* ----- Cores ---------------------------------------------------------- */
+  --cor-cabecalho: #D9F2D0;     /* faixas verde-claro dos cabecalhos */
+  --cor-fundo-celula: #FFFFFF;  /* fundo branco das celulas "Daily Progress" */
+  --cor-borda: #000000;
+  --cor-borda-titulo: #92D050;  /* linha verde abaixo de "WEEKLY TIMESHEET" */
+
+  /* ----- Bordas --------------------------------------------------------- */
+  --borda-fina: 1px;            /* estilo "thin" do Excel */
+  --borda-media: 2px;           /* estilo "medium" do Excel */
+
+  /* ----- Espacamentos --------------------------------------------------- */
+  --celula-padding-x: 3px;      /* respiro interno padrao do Excel */
+  /* Respiro vertical: afasta o texto das linhas da grade sem alterar a
+     altura das linhas (as alturas originais - 17pt, 63pt, etc. - tem folga
+     suficiente para absorver este valor). */
+  --celula-padding-y: 1px;
+  --moldura-espacamento: 32px;  /* folga branca em volta da planilha */
+  --area-espacamento: 24px;     /* folga cinza entre a folha e a janela */
+
+  /* ----- Zoom ----------------------------------------------------------- */
+  /* Fator aplicado pela barra de ferramentas. 1 = tamanho original.
+     O script.js sobrescreve este valor; aqui fica apenas o padrao. */
+  --zoom: 1;
+
+  /* ----- Dimensoes do logotipo (convertidas de EMU) --------------------- */
+  --logo-largura: 138.4px;      /* cx = 1318260 EMU */
+  --logo-altura: 80px;          /* cy =  762234 EMU */
+}
+
+/* ----------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: var(--area-espacamento);
+  background: #d0d0d0;          /* area cinza em volta da planilha */
+  font-family: var(--fonte);
+  font-size: var(--fonte-tamanho);
+  color: var(--cor-texto);
+}
+
+/* ----------------------------------------------------------------------------
+   Camadas em volta da planilha
+   -------------------------------------------------------------------------- */
+
+/* Indicador de porcentagem do zoom, exibido na barra de ferramentas */
+.valor-zoom {
+  min-width: 48px;
+  color: #1a1a1a;
+  font-family: var(--interface-fonte);
+  font-size: 12px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Area com rolagem: a planilha tem 1859px e nem sempre cabe na janela. */
+.area-planilha {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+/* Folha branca com o espacamento em volta da planilha */
+.moldura {
+  width: max-content;
+  padding: var(--moldura-espacamento);
+  background: var(--cor-fundo-celula);
+  box-shadow: 0 0 6px rgba(0, 0, 0, .35);
+}
+
+/*
+  O "palco" reserva o espaco que a planilha ocupa DEPOIS do zoom.
+  Como o transform: scale() nao altera o espaco ocupado no layout, o
+  script.js escreve aqui a largura e a altura ja multiplicadas pelo zoom -
+  e assim a moldura e a rolagem acompanham a ampliacao.
+*/
+.palco {
+  overflow: hidden;
+}
+
+/* Camada que realmente aplica o zoom */
+.conteudo-zoom {
+  width: max-content;
+  transform: scale(var(--zoom));
+  transform-origin: top left;
+}
+
+.planilha {
+  width: 1859px;                /* soma das 13 colunas */
+  border-collapse: collapse;
+  table-layout: fixed;          /* respeita as larguras do <colgroup> */
+}
+
+/* ----------------------------------------------------------------------------
+   Celulas - comportamento comum
+   -------------------------------------------------------------------------- */
+/* Regra base proposital sem classe: assim qualquer classe .c-* abaixo
+   consegue sobrescrever alinhamento, borda e fundo sem dificuldade. */
+td {
+  padding: var(--celula-padding-y) var(--celula-padding-x);
+  text-align: center;
+  vertical-align: middle;
+  /* "pre-line" reproduz o "Quebrar texto automaticamente" do Excel e ainda
+     respeita as quebras de linha digitadas dentro da celula. */
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+.negrito { font-weight: bold; }
+.italico { font-style: italic; }
+
+/* ----------------------------------------------------------------------------
+   Alturas das linhas
+   Valores em pontos, exatamente como estao no arquivo .xlsx original.
+   O script.js apenas aplica a classe; a medida mora aqui.
+   -------------------------------------------------------------------------- */
+.linha-titulo           { height: 64.75pt; }  /* linha 1  - titulo           */
+.linha-vazia            { height: 15pt;    }  /* linha 2  - vazia            */
+.linha-identificacao    { height: 17pt;    }  /* linhas 3 e 4                */
+.linha-separadora       { height: 16pt;    }  /* linha 5  - vazia            */
+.linha-cabecalho-dia    { height: 63pt;    }  /* cabecalho verde de cada dia */
+.linha-dado             { height: 17pt;    }  /* linhas de tecnicos          */
+.linha-assinatura       { height: 58.25pt; }  /* linha 34 - assinaturas      */
+.linha-assinatura-texto { height: 17pt;    }  /* linhas 35 e 36              */
+.linha-rodape           { height: 16pt;    }  /* linhas 37 e 38 - vazias     */
+
+/* ----------------------------------------------------------------------------
+   Aviso exibido quando o dados.json nao pode ser lido
+   -------------------------------------------------------------------------- */
+.aviso-erro {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 32px;
+  background: var(--cor-fundo-celula);
+  box-shadow: 0 0 6px rgba(0, 0, 0, .35);
+  line-height: 1.5;
+}
+
+.aviso-erro h1 {
+  margin: 0 0 16px;
+  font-size: 16pt;
+}
+
+.aviso-erro p {
+  margin: 0 0 12px;
+  font-size: 11pt;
+}
+
+/* ----------------------------------------------------------------------------
+   Linha 1 - titulo "WEEKLY TIMESHEET" (celulas A1:J1 mescladas)
+   -------------------------------------------------------------------------- */
+.c-titulo {
+  position: relative;           /* ancora do logotipo */
+  border-bottom: var(--borda-media) solid var(--cor-borda-titulo);
+  font-size: var(--fonte-titulo);
+  font-weight: bold;
+}
+
+/* Logotipo ancorado no canto superior esquerdo da celula A1 */
+.logotipo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--logo-largura);
+  height: var(--logo-altura);
+}
+
+/* ----------------------------------------------------------------------------
+   Celulas de cabecalho (fundo verde-claro)
+   -------------------------------------------------------------------------- */
+.c-cab {
+  background: var(--cor-cabecalho);
+  border: var(--borda-fina) solid var(--cor-borda);
+}
+
+/* Cabecalho da coluna M ("Daily Progress"): texto a esquerda */
+.c-cab-esq {
+  background: var(--cor-cabecalho);
+  border: var(--borda-fina) solid var(--cor-borda);
+  text-align: left;
+}
+
+/*
+  Cabecalhos "Stand-by/h", "Working/h" e "Travel / h".
+  No Excel sao girados 90 graus (leitura de baixo para cima).
+*/
+.c-cab-girado {
+  background: var(--cor-cabecalho);
+  border: var(--borda-fina) solid var(--cor-borda);
+  font-weight: bold;
+  padding: 0;
+}
+
+.c-cab-girado span {
+  /* "inline-block" sobrescreve o display:block padrao do campo editavel:
+     a rotacao precisa de uma caixa do tamanho do texto. */
+  display: inline-block;
+  transform: rotate(-90deg);
+  white-space: nowrap;
+}
+
+/* ----------------------------------------------------------------------------
+   Celulas de dados
+   -------------------------------------------------------------------------- */
+
+/* Valor comum: centralizado, com grade */
+.c-valor {
+  border: var(--borda-fina) solid var(--cor-borda);
+}
+
+/* Valor alinhado a esquerda (nomes dos tecnicos e coluna "Blade No.") */
+.c-valor-esq {
+  border: var(--borda-fina) solid var(--cor-borda);
+  text-align: left;
+}
+
+/* Coluna A das datas: mesclada verticalmente em 3 linhas */
+.c-data {
+  border: var(--borda-fina) solid var(--cor-borda);
+}
+
+/*
+  Linhas de dados sem quebra de linha.
+  Cada valor fica sempre em uma unica linha; o que nao couber na largura da
+  coluna e cortado, nunca jogado para a linha de baixo. E assim que o Excel
+  se comporta com a altura de linha fixa em 17pt, e e o que mantem as linhas
+  de dados alinhadas com as celulas mescladas das colunas A e M.
+
+  Os cabecalhos verdes (.c-cab) e a coluna "Daily Progress" (.c-progresso)
+  NAO entram nesta regra: nos dois casos o texto em varias linhas faz parte
+  do documento original.
+*/
+.c-valor,
+.c-valor-esq,
+.c-data {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Coluna M "Daily Progress": mesclada em 3 linhas, fundo branco, texto a
+   esquerda. No arquivo original este texto fica alinhado ao topo da celula
+   mesclada; aqui ele acompanha o resto da planilha e fica centralizado. */
+.c-progresso {
+  background: var(--cor-fundo-celula);
+  border: var(--borda-fina) solid var(--cor-borda);
+  text-align: left;
+}
+
+/* ----------------------------------------------------------------------------
+   Bloco de assinaturas (linhas 34 a 36)
+   -------------------------------------------------------------------------- */
+
+/* Rotulos "Signature", "Name", "Date", "Client Signature", "Client Name" */
+.c-rotulo-assinatura {
+  text-align: right;
+}
+
+/* Area livre onde a assinatura sera feita, ja no PDF (sem borda) */
+.c-campo {
+  position: relative;
+}
+
+/* Campos com linha de preenchimento (borda apenas embaixo) */
+.c-campo-linha {
+  border-bottom: var(--borda-fina) solid var(--cor-borda);
+}
+
+/* ----------------------------------------------------------------------------
+   Impressao
+   Original: A3 na horizontal, reduzido a 32% para caber em uma pagina.
+   -------------------------------------------------------------------------- */
+@page {
+  size: A3 landscape;
+  margin: 0.75in 0.7in;
+}
+
+@media print {
+  body {
+    padding: 0;
+    background: var(--cor-fundo-celula);
+  }
+
+  .area-planilha {
+    width: auto;
+    max-width: none;
+    overflow: visible;
+  }
+
+  /* Na impressao a planilha volta ao tamanho original, sem moldura */
+  .moldura {
+    width: auto;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .palco {
+    width: auto !important;
+    height: auto !important;
+    overflow: visible;
+  }
+
+  .conteudo-zoom {
+    width: auto;
+    transform: none;
+  }
+}

@@ -1,0 +1,151 @@
+/* ============================================================================
+   edicao.css - aparencia do modo de edicao
+   ----------------------------------------------------------------------------
+   Estilos aplicados apenas enquanto a edicao esta ligada (a classe
+   "modo-edicao" fica no <body>). Nada daqui aparece no documento impresso.
+
+   Observacao sobre o campo editavel: ele e um <span> em bloco que ocupa a
+   celula inteira, para que clicar em qualquer ponto da celula coloque o
+   cursor no texto. Como "outline" nao ocupa espaco no layout, o contorno
+   dos campos NAO desloca nem redimensiona nada do documento.
+   ============================================================================ */
+
+/* Campo editavel: invisivel enquanto a edicao esta desligada */
+.campo-editavel {
+  display: block;
+  min-height: 1em;
+}
+
+/* Campo que convive com texto fixo ao lado (ex.: "Date: 15/11/2026") */
+.campo-editavel.campo-em-linha {
+  display: inline;
+}
+
+/* ----------------------------------------------------------------------------
+   Campo bloqueado
+   Usado na planilha: os blocos dos sete dias so liberam depois que o numero
+   da semana for informado e validado.
+   -------------------------------------------------------------------------- */
+body.modo-edicao .campo-bloqueado {
+  background: rgba(0, 0, 0, .05);
+  cursor: not-allowed;
+}
+
+/* Campo obrigatorio que destrava o resto do documento */
+body.modo-edicao .c-obrigatorio [contenteditable] {
+  outline: 2px solid rgba(179, 38, 30, .75);
+  background: rgba(179, 38, 30, .08);
+}
+
+body.modo-edicao .c-obrigatorio.c-preenchido [contenteditable] {
+  outline: 2px solid rgba(31, 111, 196, .85);
+  background: rgba(31, 111, 196, .10);
+}
+
+/* ----------------------------------------------------------------------------
+   Campos durante a edicao
+   -------------------------------------------------------------------------- */
+body.modo-edicao [contenteditable] {
+  outline: 1px dashed rgba(31, 111, 196, .55);
+  outline-offset: -1px;
+  background: rgba(31, 111, 196, .05);
+  cursor: text;
+}
+
+body.modo-edicao [contenteditable]:hover {
+  background: rgba(31, 111, 196, .10);
+}
+
+body.modo-edicao [contenteditable]:focus {
+  outline: 2px solid rgba(31, 111, 196, .85);
+  outline-offset: -2px;
+  background: rgba(31, 111, 196, .14);
+}
+
+/* ----------------------------------------------------------------------------
+   Botao "x" de remover linha
+   Fica sobre a borda direita da linha e so aparece com o ponteiro em cima.
+   -------------------------------------------------------------------------- */
+
+/* Ancora do botao: a ultima celula da linha, ou o proprio paragrafo */
+body.modo-edicao [data-colecao] > tr > td:last-child,
+body.modo-edicao [data-colecao] > p {
+  position: relative;
+}
+
+.controle-linha {
+  position: absolute;
+  top: 50%;
+  right: 2px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid #c88;
+  border-radius: 50%;
+  background: #fff;
+  color: #b3261e;
+  font-family: var(--interface-fonte);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s;
+}
+
+/* Aparece ao passar o mouse pela linha, e sempre que recebe o foco */
+body.modo-edicao tr:hover .controle-linha,
+body.modo-edicao p:hover .controle-linha,
+.controle-linha:focus {
+  opacity: 1;
+}
+
+.controle-linha:hover {
+  background: #b3261e;
+  color: #fff;
+}
+
+/* ----------------------------------------------------------------------------
+   Botao "+ linha"
+   Fica na area marcada com data-controles, logo abaixo de cada tabela.
+   -------------------------------------------------------------------------- */
+[data-controles] {
+  height: 0;              /* nao ocupa espaco fora do modo de edicao */
+  overflow: visible;
+}
+
+body.modo-edicao [data-controles] {
+  height: auto;
+  margin: 2pt 0 6pt;
+}
+
+.botao-adicionar {
+  padding: 2px 10px;
+  border: 1px dashed var(--interface-destaque);
+  border-radius: 4px;
+  background: rgba(31, 111, 196, .06);
+  color: var(--interface-destaque);
+  font-family: var(--interface-fonte);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.botao-adicionar:hover {
+  background: rgba(31, 111, 196, .16);
+}
+
+/* ----------------------------------------------------------------------------
+   Impressao - nada da edicao entra no PDF
+   -------------------------------------------------------------------------- */
+@media print {
+  .controle-linha,
+  .botao-adicionar,
+  [data-controles] {
+    display: none !important;
+  }
+
+  [contenteditable] {
+    outline: none !important;
+    background: none !important;
+  }
+}

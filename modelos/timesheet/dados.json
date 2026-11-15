@@ -1,0 +1,451 @@
+{
+  "titulo": "WEEKLY TIMESHEET",
+  "ano": 2026,
+  "imagens": {
+    "logotipo": {
+      "arquivo": "imagens/logo.png",
+      "descricao": "Nordic Access"
+    }
+  },
+  "identificacao": [
+    {
+      "rotulo": "Nordic A. Job Num",
+      "valor": "NORD-0000",
+      "colunas": 1
+    },
+    {
+      "rotulo": "Week",
+      "valor": "45",
+      "colunas": 1
+    },
+    {
+      "rotulo": "Team No.",
+      "valor": "2",
+      "colunas": 1
+    },
+    {
+      "rotulo": "Job Scope",
+      "valor": "Retrofit and Inspections",
+      "colunas": 2
+    },
+    {
+      "rotulo": "Client",
+      "valor": "Example Client",
+      "colunas": 1
+    },
+    {
+      "rotulo": "Site Name",
+      "valor": "Example Site",
+      "colunas": 4,
+      "valorAEsquerda": true
+    }
+  ],
+  "colunasTecnico": [
+    {
+      "chave": "nome",
+      "titulo": "Technician Name"
+    },
+    {
+      "chave": "funcao",
+      "titulo": "Role"
+    },
+    {
+      "chave": "turbinaLocal",
+      "titulo": "Local Turbine No. (eg WEA1)"
+    },
+    {
+      "chave": "turbinaId",
+      "titulo": "Turbine ID No. (eg 552201011)"
+    },
+    {
+      "chave": "torre",
+      "titulo": "Client Tower No. (eg G20_000001_DE)"
+    },
+    {
+      "chave": "lamina",
+      "titulo": "Blade No. "
+    },
+    {
+      "chave": "standby",
+      "titulo": "Stand-by/h"
+    },
+    {
+      "chave": "trabalho",
+      "titulo": "Working/h"
+    },
+    {
+      "chave": "viagem",
+      "titulo": "Travel / h"
+    },
+    {
+      "chave": "paradaTurbina",
+      "titulo": "WTG Downtime hours"
+    },
+    {
+      "chave": "motivoStandby",
+      "titulo": "Stand-by Time Reason"
+    }
+  ],
+  "colunaProgresso": {
+    "titulo": "Daily Progress\nExample:\n07:00 Tooling prepare, grinding, chamfering, lamination, coating&finishing. 19:00 demob."
+  },
+  "dias": [
+    {
+      "rotulo": "Monday Date",
+      "data": "02/11/2026",
+      "progresso": "WEA01 first and tower access inspection finished",
+      "tecnicos": [
+        {
+          "nome": "Technician One",
+          "funcao": "L3",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "0",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "5",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Two",
+          "funcao": "L1",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "0",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "5",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Three",
+          "funcao": "L1",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "0",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "5",
+          "motivoStandby": "."
+        }
+      ],
+      "ajustesCabecalho": {
+        "turbinaId": "Turbine ID No. (eg 552201234)",
+        "paradaTurbina": "WTG Downtime Hours"
+      }
+    },
+    {
+      "rotulo": "Tuesday Date",
+      "data": "03/11/2026",
+      "progresso": "Vehicle maintenance: team on stand-by for the whole day.",
+      "tecnicos": [
+        {
+          "nome": "Technician One",
+          "funcao": "L3",
+          "turbinaLocal": "-",
+          "turbinaId": "-",
+          "torre": "-",
+          "lamina": "",
+          "standby": "5",
+          "trabalho": "5",
+          "viagem": "-",
+          "paradaTurbina": "0",
+          "motivoStandby": "Waiting for vehicle inspection"
+        },
+        {
+          "nome": "Technician Two",
+          "funcao": "L1",
+          "turbinaLocal": "-",
+          "turbinaId": "-",
+          "torre": "-",
+          "lamina": "",
+          "standby": "5",
+          "trabalho": "5",
+          "viagem": "-",
+          "paradaTurbina": "0",
+          "motivoStandby": "Waiting for vehicle inspection"
+        },
+        {
+          "nome": "Technician Three",
+          "funcao": "L1",
+          "turbinaLocal": "-",
+          "turbinaId": "-",
+          "torre": "-",
+          "lamina": "",
+          "standby": "5",
+          "trabalho": "5",
+          "viagem": "-",
+          "paradaTurbina": "0",
+          "motivoStandby": "Waiting for vehicle inspection"
+        }
+      ],
+      "standbyEmItalico": true
+    },
+    {
+      "rotulo": "Wednesday Date ",
+      "data": "04/11/2026",
+      "progresso": "WEA01 inspection finished.\nWEA01 retrofit C12 finished.\nWaste disposal on site.",
+      "tecnicos": [
+        {
+          "nome": "Technician One",
+          "funcao": "L3",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "0",
+          "trabalho": "15",
+          "viagem": "-",
+          "paradaTurbina": "-",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Two",
+          "funcao": "L1",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "0",
+          "trabalho": "15",
+          "viagem": "-",
+          "paradaTurbina": "-",
+          "motivoStandby": ""
+        },
+        {
+          "nome": "Technician Three",
+          "funcao": "L1",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "0",
+          "trabalho": "15",
+          "viagem": "-",
+          "paradaTurbina": "-",
+          "motivoStandby": ""
+        }
+      ]
+    },
+    {
+      "rotulo": "Thursday Date ",
+      "data": "05/11/2026",
+      "progresso": "WEA01 retrofit finished.",
+      "tecnicos": [
+        {
+          "nome": "Technician One",
+          "funcao": "L3",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Two",
+          "funcao": "L1",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Three",
+          "funcao": "L1",
+          "turbinaLocal": "WEA01",
+          "turbinaId": "10000001",
+          "torre": "G20_000001_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        }
+      ]
+    },
+    {
+      "rotulo": "Friday Date ",
+      "data": "06/11/2026",
+      "progresso": "WEA02 ring C12 finished.",
+      "tecnicos": [
+        {
+          "nome": "Technician One",
+          "funcao": "L3",
+          "turbinaLocal": "WEA02",
+          "turbinaId": "10000002",
+          "torre": "G20_000002_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Two",
+          "funcao": "L1",
+          "turbinaLocal": "WEA02",
+          "turbinaId": "10000002",
+          "torre": "G20_000002_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Three",
+          "funcao": "L1",
+          "turbinaLocal": "WEA02",
+          "turbinaId": "10000002",
+          "torre": "G20_000002_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        }
+      ]
+    },
+    {
+      "rotulo": "Saturday Date ",
+      "data": "07/11/2026",
+      "progresso": "WEA02 ring C25 finished.",
+      "tecnicos": [
+        {
+          "nome": "Technician One",
+          "funcao": "L3",
+          "turbinaLocal": "WEA02",
+          "turbinaId": "10000002",
+          "torre": "G20_000002_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Two",
+          "funcao": "L1",
+          "turbinaLocal": "WEA02",
+          "turbinaId": "10000002",
+          "torre": "G20_000002_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Three",
+          "funcao": "L1",
+          "turbinaLocal": "WEA02",
+          "turbinaId": "10000002",
+          "torre": "G20_000002_DE",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "10",
+          "viagem": "-",
+          "paradaTurbina": "7",
+          "motivoStandby": "-"
+        }
+      ]
+    },
+    {
+      "rotulo": "Sunday Date ",
+      "data": "08/11/2026",
+      "progresso": "Reports for WEA01 and WEA02 inspections\nReports for WEA01 and WEA02 retrofit",
+      "tecnicos": [
+        {
+          "nome": "Technician One",
+          "funcao": "L3",
+          "turbinaLocal": "-",
+          "turbinaId": "-",
+          "torre": "-",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "8",
+          "viagem": "-",
+          "paradaTurbina": "-",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Two",
+          "funcao": "L1",
+          "turbinaLocal": "-",
+          "turbinaId": "-",
+          "torre": "-",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "-",
+          "viagem": "-",
+          "paradaTurbina": "-",
+          "motivoStandby": "-"
+        },
+        {
+          "nome": "Technician Three",
+          "funcao": "L1",
+          "turbinaLocal": "-",
+          "turbinaId": "-",
+          "torre": "-",
+          "lamina": "",
+          "standby": "-",
+          "trabalho": "-",
+          "viagem": "-",
+          "paradaTurbina": "-",
+          "motivoStandby": "-"
+        }
+      ]
+    }
+  ],
+  "assinaturas": {
+    "nota": "Please convert to PDF before signing",
+    "linhas": [
+      {
+        "rotuloEsquerda": "Signature",
+        "valorEsquerda": "",
+        "rotuloDireita": "Client Signature",
+        "valorDireita": "",
+        "comLinha": false,
+        "comNota": true
+      },
+      {
+        "rotuloEsquerda": "Name",
+        "valorEsquerda": "",
+        "rotuloDireita": "Client Name",
+        "valorDireita": "",
+        "comLinha": true,
+        "comNota": false
+      },
+      {
+        "rotuloEsquerda": "Date",
+        "valorEsquerda": "",
+        "rotuloDireita": "Date",
+        "valorDireita": "",
+        "comLinha": true,
+        "comNota": false,
+        "dataAutomatica": true
+      }
+    ]
+  }
+}

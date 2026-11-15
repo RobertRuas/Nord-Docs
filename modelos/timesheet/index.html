@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--
+    ============================================================================
+    WEEKLY TIMESHEET - reproducao fiel de "W45_0756_weekly-timesheet.xlsx"
+    ============================================================================
+    Dos dois arquivos originais (.xlsx e .xltx) foi usado o .xlsx: os dois tem
+    o mesmo conteudo interno, mas o .xlsx e o documento ja preenchido.
+
+    Esta pasta contem apenas o que e proprio deste modelo:
+
+      dados.json   CONTEUDO: a semana inteira em JSON puro. E o unico
+                   arquivo a editar para trocar datas, nomes ou horas.
+      index.html   ESTRUTURA (este arquivo): a tabela e a largura das
+                   13 colunas (A ate M). As linhas sao criadas por script.
+      modelo.js    CONFIGURACAO deste modelo (poucas linhas).
+      imagens/     logotipo da celula A1.
+
+    O numero da semana (celula B4) e obrigatorio: e dele que saem as datas
+    dos sete dias. Enquanto nao houver uma semana valida, os blocos dos dias
+    ficam travados para edicao.
+
+    O campo de assinatura fica em branco de proposito: a assinatura e feita
+    depois, no PDF.
+
+    O comportamento vem de /app/js e o desenho de /app/tipos/planilha.
+
+    COMO ABRIR: pelo atalho "abrir.command" da pasta Nord.
+
+    O QUE DA PARA FAZER AQUI:
+      Editar      liga a edicao direto na planilha (Ctrl/Cmd + E)
+      Importar    carrega um dados.json de qualquer lugar do computador
+      Exportar    baixa o dados.json com as alteracoes feitas
+      Gerar PDF   abre a impressao do navegador (Ctrl/Cmd + P)
+      Descartar   volta ao conteudo original do arquivo
+      Zoom        botoes, Ctrl/Cmd com + - 0, ou Ctrl/Cmd + roda do mouse
+    ============================================================================
+  -->
+
+  <title>Weekly Timesheet - W45</title>
+
+  <!-- Estilo do tipo de documento -->
+  <link rel="stylesheet" href="../../app/tipos/planilha/planilha.css">
+
+  <!-- Estilo da interface (nao entra no PDF) -->
+  <link rel="stylesheet" href="../../app/css/interface.css">
+  <link rel="stylesheet" href="../../app/css/edicao.css">
+</head>
+
+<body>
+
+<!--
+  Barra de ferramentas unica: as acoes do documento e os controles de zoom.
+  Nao faz parte do documento e nunca aparece no PDF.
+-->
+<div class="barra-ferramentas" role="toolbar" aria-label="Ferramentas da planilha">
+  <a class="link-voltar" href="../../index.html" title="Voltar para a lista de modelos">&larr; Modelos</a>
+  <span class="separador-barra"></span>
+
+  <button type="button" class="botao-barra" id="acao-editar" title="Editar a planilha (Ctrl/Cmd + E)">Editar</button>
+  <span class="separador-barra"></span>
+
+  <button type="button" class="botao-barra" id="acao-importar" title="Carregar um arquivo dados.json">Importar</button>
+  <button type="button" class="botao-barra" id="acao-exportar" title="Baixar o dados.json com as alteracoes">Exportar</button>
+  <span class="separador-barra"></span>
+
+  <button type="button" class="botao-barra" id="acao-pdf" title="Gerar PDF (Ctrl/Cmd + P)">Gerar PDF</button>
+  <button type="button" class="botao-barra" id="acao-descartar" title="Voltar ao conteudo original do arquivo">Descartar</button>
+  <span class="separador-barra"></span>
+
+  <!-- Controles de zoom (ver app/tipos/planilha/zoom.js) -->
+  <button type="button" class="botao-barra" id="zoom-menos" title="Reduzir (Ctrl -)">&minus;</button>
+  <output class="valor-zoom" id="zoom-valor" aria-live="polite">100%</output>
+  <button type="button" class="botao-barra" id="zoom-mais" title="Ampliar (Ctrl +)">+</button>
+  <button type="button" class="botao-barra" id="zoom-original" title="Tamanho original (Ctrl 0)">100%</button>
+  <button type="button" class="botao-barra" id="zoom-largura" title="Ajustar a largura da janela">Ajustar</button>
+
+  <output class="aviso-barra" id="aviso-alteracoes" aria-live="polite"></output>
+</div>
+
+<!--
+  Faixa de aviso: aparece quando o numero da semana esta vazio ou invalido.
+  O texto e escrito por app/tipos/planilha/semana.js.
+-->
+<div class="faixa-aviso" id="aviso-semana" role="status"></div>
+
+<!--
+  Estrutura de tres camadas em volta da planilha:
+
+    .area-planilha  -> area com rolagem (a planilha tem 1859px de largura)
+    .moldura        -> folha branca com o espacamento em volta da planilha
+    .palco          -> reserva o espaco ja multiplicado pelo zoom
+    .conteudo-zoom  -> recebe o transform: scale() do zoom
+-->
+<div class="area-planilha">
+
+  <div class="moldura">
+    <div class="palco" id="palco">
+      <div class="conteudo-zoom" id="conteudo-zoom">
+
+        <table class="planilha">
+
+          <!--
+            Larguras das colunas A..M.
+            O Excel guarda a largura em "numero de caracteres"; a conversao
+            usada foi  px = largura * 7 + 5  (fonte padrao Calibri 11).
+          -->
+          <colgroup>
+            <col style="width: 126px">   <!-- A - 17,33 car. - Job Num / datas  -->
+            <col style="width: 180px">   <!-- B - 25,00 car. - Technician Name  -->
+            <col style="width:  87px">   <!-- C - 11,66 car. - Role             -->
+            <col style="width: 116px">   <!-- D - 15,83 car. - Local Turbine No -->
+            <col style="width: 144px">   <!-- E - 19,83 car. - Turbine ID No.   -->
+            <col style="width: 144px">   <!-- F - 19,83 car. - Tower No.        -->
+            <col style="width:  70px">   <!-- G -  9,33 car. - Blade No.        -->
+            <col style="width:  60px">   <!-- H -  7,83 car. - Stand-by/h       -->
+            <col style="width:  60px">   <!-- I -  7,83 car. - Working/h        -->
+            <col style="width:  60px">   <!-- J -  7,83 car. - Travel/h         -->
+            <col style="width:  82px">   <!-- K - 11,00 car. - WTG Downtime     -->
+            <col style="width: 177px">   <!-- L - 24,50 car. - Stand-by Reason  -->
+            <col style="width: 553px">   <!-- M - 78,33 car. - Daily Progress   -->
+          </colgroup>
+
+          <!-- Todas as 38 linhas sao geradas por app/tipos/planilha/montagem.js -->
+          <tbody id="corpo-planilha"></tbody>
+
+        </table>
+
+      </div><!-- /.conteudo-zoom -->
+    </div><!-- /.palco -->
+  </div><!-- /.moldura -->
+
+</div><!-- /.area-planilha -->
+
+<!-- Modulo ES. Comece a leitura por modelo.js, que tem a configuracao. -->
+<script type="module" src="modelo.js"></script>
+</body>
+</html>

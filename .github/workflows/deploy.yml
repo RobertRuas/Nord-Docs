@@ -1,0 +1,54 @@
+# =============================================================================
+# Publicacao automatica no GitHub Pages
+# -----------------------------------------------------------------------------
+# Todo push na branch "main" publica o site. Nao ha etapa de build: o projeto
+# e HTML, CSS e JavaScript puros, entao a pasta inteira vai direto para o ar.
+#
+# Antes do primeiro deploy, no GitHub:
+#   Settings -> Pages -> Source: "GitHub Actions"
+# =============================================================================
+
+name: Publicar no GitHub Pages
+
+on:
+  # Publica a cada push na branch principal
+  push:
+    branches: [main]
+  # Permite publicar manualmente pela aba Actions
+  workflow_dispatch:
+
+# Permissoes minimas de que o deploy precisa
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Um deploy por vez; deploys em andamento nao sao cancelados
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - name: Baixar o repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar o GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empacotar o site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # A raiz do projeto e o proprio site
+          path: .
+
+      - name: Publicar
+        id: deploy
+        uses: actions/deploy-pages@v4

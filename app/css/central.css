@@ -1,0 +1,134 @@
+/* ============================================================================
+   central.css - pagina inicial com a lista de modelos
+   ============================================================================ */
+
+:root {
+  --central-fonte: "Segoe UI", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  --central-fundo: #f3f4f6;
+  --central-texto: #1a1a1a;
+  --central-suave: #6a6a6a;
+  --central-destaque: #1f6fc4;
+  --central-borda: #dcdcdc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 48px 24px 64px;
+  background: var(--central-fundo);
+  color: var(--central-texto);
+  font-family: var(--central-fonte);
+  line-height: 1.5;
+}
+
+.cabecalho-central {
+  max-width: 880px;
+  margin: 0 auto 32px;
+}
+
+.cabecalho-central h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.cabecalho-central p {
+  margin: 0;
+  color: var(--central-suave);
+  font-size: 14px;
+}
+
+/* ----------------------------------------------------------------------------
+   Lista de modelos
+   -------------------------------------------------------------------------- */
+.lista-modelos {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.cartao {
+  display: block;
+  padding: 20px;
+  border: 1px solid var(--central-borda);
+  border-radius: 10px;
+  background: #ffffff;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+
+.cartao:hover {
+  border-color: var(--central-destaque);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .10);
+  transform: translateY(-2px);
+}
+
+.cartao-formato {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(31, 111, 196, .10);
+  color: var(--central-destaque);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.cartao-nome {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.cartao-resumo {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+
+.cartao-origem {
+  margin: 0;
+  color: var(--central-suave);
+  font-size: 12px;
+}
+
+/* ----------------------------------------------------------------------------
+   Aviso de falha ao carregar o catalogo
+   -------------------------------------------------------------------------- */
+.aviso-falha {
+  grid-column: 1 / -1;
+  padding: 24px;
+  border: 1px solid var(--central-borda);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.aviso-falha h1 { margin: 0 0 12px; font-size: 17px; }
+.aviso-falha p  { margin: 0 0 10px; font-size: 14px; }
+
+/* ----------------------------------------------------------------------------
+   Rodape com o credito do autor
+   -------------------------------------------------------------------------- */
+.rodape-central {
+  max-width: 880px;
+  margin: 40px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--central-borda);
+  color: var(--central-suave);
+  font-size: 13px;
+  text-align: center;
+}
+
+.rodape-central p { margin: 0; }
+
+.rodape-central a {
+  color: var(--central-destaque);
+  text-decoration: none;
+}
+
+.rodape-central a:hover { text-decoration: underline; }

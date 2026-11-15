@@ -1,0 +1,15 @@
+/* ============================================================================
+   variacao.css - o que distingue a Invoice de Despesas da Invoice de Horas
+   ----------------------------------------------------------------------------
+   As duas faturas sao o mesmo documento com duas variacoes. Todo o resto do
+   estilo vem de tipos/fatura/fatura.css; aqui ficam apenas as medidas que o
+   arquivo invoice_014.docx tem de diferente.
+   ============================================================================ */
+
+:root {
+  /* Bordas das tabelas de informacao: sz=4 oitavos de ponto (mais grossas) */
+  --borda-cinza-espessura: 0.5pt;
+
+  /* Tabela "Projects Details": 10456 twips, a largura toda da folha */
+  --tabela-projetos-largura: 522.8pt;
+}

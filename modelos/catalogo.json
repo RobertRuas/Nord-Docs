@@ -1,0 +1,30 @@
+{
+  "titulo": "Nordic Access - Documentos",
+  "descricao": "Modelos reproduzidos a partir dos arquivos originais do Word e do Excel.",
+  "modelos": [
+    {
+      "id": "invoice-despesas",
+      "nome": "Invoice de Despesas",
+      "resumo": "Fatura de despesas: diarias de viagem, per diem e gastos.",
+      "origem": "invoice_014.docx",
+      "formato": "A4 retrato",
+      "pasta": "modelos/invoice-despesas/"
+    },
+    {
+      "id": "invoice-horas",
+      "nome": "Invoice de Horas",
+      "resumo": "Fatura de horas: horas trabalhadas e horas de stand-by.",
+      "origem": "invoice_015.docx",
+      "formato": "A4 retrato",
+      "pasta": "modelos/invoice-horas/"
+    },
+    {
+      "id": "timesheet",
+      "nome": "Weekly Timesheet",
+      "resumo": "Folha de horas semanal da equipe, de segunda a domingo.",
+      "origem": "W45_0756_weekly-timesheet.xlsx",
+      "formato": "A3 paisagem",
+      "pasta": "modelos/timesheet/"
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+/* ============================================================================
+   fatura.css - estilo base das faturas
+   ----------------------------------------------------------------------------
+   Compartilhado pelos modelos invoice-despesas e invoice-horas.
+   Todas as medidas foram convertidas diretamente do XML dos arquivos .docx.
+
+   As duas faturas sao o mesmo documento com pequenas diferencas de medida.
+   O que varia de uma para a outra fica no variacao.css de cada modelo.
+   Unidades do Word usadas no original:
+     - twip  = 1/20 de ponto   (ex.: 1985 twips = 99,25pt)
+     - meio-ponto  -> tamanho de fonte (ex.: sz=44 -> 22pt)
+     - oitavo-de-ponto -> espessura de borda (ex.: sz=2 -> 0,25pt)
+
+   Para ajustar o documento, prefira mudar as variaveis do bloco :root abaixo.
+   ============================================================================ */
+
+:root {
+  /* ----- Folha (sectPr do original) ----------------------------------- */
+  --pagina-largura: 210mm;    /* pgSz w=11906 twips */
+  --pagina-altura: 297mm;     /* pgSz h=16838 twips */
+  --pagina-margem: 12.7mm;    /* pgMar 720 twips em todos os lados */
+
+  /* ----- Tipografia (docDefaults do original) -------------------------- */
+  --fonte: Calibri, Carlito, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --fonte-tamanho: 12pt;      /* sz=24 meios-pontos */
+  --fonte-titulo: 22pt;       /* sz=44 meios-pontos */
+  --cor-texto: #000000;
+
+  /* Altura de linha.
+     O Word usa "line=278 auto" (= 1,158 x entrelinha simples) no estilo
+     Normal e "line=240 auto" (= simples) no estilo "Sem Espacamento".
+     Como a entrelinha simples da Calibri equivale a ~1,22em, os valores
+     finais em CSS ficam: 1,22 x 1,158 = 1,413 e 1,22. */
+  --linha-normal: 1.413;
+  --linha-simples: 1.22;
+
+  --espaco-depois: 8pt;       /* spacing after=160 twips do estilo Normal */
+
+  /* ----- Tabelas -------------------------------------------------------- */
+  --tabela-largura: 522.8pt;  /* 10456 twips (1985 + 8471) */
+  --borda-cinza: #808080;     /* themeColor background1 shade 80 */
+  /* Definidos por cada modelo em variacao.css (os valores abaixo sao so
+     um ponto de partida seguro caso o arquivo nao seja carregado). */
+  --borda-cinza-espessura: 0.25pt;
+  --borda-preta: #000000;
+  --borda-preta-espessura: 0.5pt;   /* sz=4 oitavos de ponto (estilo TableGrid) */
+  --tabela-projetos-largura: 473.85pt;
+  --celula-padding-x: 5.4pt;  /* tblCellMar left/right = 108 twips */
+  /* Respiro vertical dentro da celula. No Word o tblCellMar de cima e de
+     baixo e 0, o que deixa o texto encostado na linha. Este valor pequeno
+     afasta o texto da borda SEM mudar a altura da celula: nas tabelas de
+     informacao sobra folga dentro dos 17pt, e nas tabelas em grade ele e
+     descontado do espaco de baixo (ver .tabela-grade). */
+  --celula-padding-y: 1pt;
+  --celula-altura-min: 17pt;  /* trHeight = 340 twips */
+  --cabecalho-fundo: #D9D9D9; /* shd fill D9D9D9 */
+
+  /* ----- Outros --------------------------------------------------------- */
+  --borda-paragrafo: 1.5pt;   /* pBdr bottom sz=12 oitavos de ponto */
+  --recuo-marcador: 35.4pt;   /* ind left=708 twips nos itens com "bullet" */
+}
+
+/* ----------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 10mm 0;
+  background: #d0d0d0;          /* fundo da area de trabalho, como no Word */
+  font-family: var(--fonte);
+  font-size: var(--fonte-tamanho);
+  color: var(--cor-texto);
+}
+
+/* A folha propriamente dita */
+.pagina {
+  width: var(--pagina-largura);
+  min-height: var(--pagina-altura);
+  margin: 0 auto;
+  padding: var(--pagina-margem);
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .35);
+}
+
+/* ----------------------------------------------------------------------------
+   Paragrafos
+   -------------------------------------------------------------------------- */
+
+/* Estilo "Normal": entrelinha 1,158 e 8pt de espaco depois */
+.par-normal {
+  margin: 0 0 var(--espaco-depois) 0;
+  line-height: var(--linha-normal);
+}
+
+/* Estilo "Sem Espacamento" (NoSpacing): entrelinha simples, sem espaco depois */
+.par-simples {
+  margin: 0;
+  line-height: var(--linha-simples);
+}
+
+.negrito {
+  font-weight: bold;
+}
+
+/* Titulo "INVOICE" */
+.titulo {
+  margin: 0 0 var(--espaco-depois) 0;
+  font-size: var(--fonte-titulo);
+  font-weight: bold;
+  line-height: var(--linha-normal);
+  text-align: center;
+}
+
+/*
+  Grupo de paragrafos que compartilham a mesma borda inferior.
+  No Word a linha aparece apenas abaixo do ultimo paragrafo do grupo;
+  o "space=1" do original vira 1pt de respiro antes da linha.
+*/
+.grupo-com-borda {
+  padding-bottom: 1pt;
+  border-bottom: var(--borda-paragrafo) solid var(--borda-preta);
+}
+
+/* Itens "I confirm that:" - o marcador tipografico faz parte do texto */
+.item-marcador {
+  margin: 0;
+  padding-left: var(--recuo-marcador);
+  line-height: var(--linha-simples);
+}
+
+/* ----------------------------------------------------------------------------
+   Tabelas - regras comuns
+   -------------------------------------------------------------------------- */
+table {
+  border-collapse: collapse;
+  table-layout: fixed;        /* respeita as larguras do <colgroup> */
+}
+
+td, th {
+  padding: var(--celula-padding-y) var(--celula-padding-x);
+  height: var(--celula-altura-min);
+  font-weight: normal;
+  text-align: left;
+  /* Todo o conteudo das tabelas fica centralizado verticalmente, para que o
+     texto fique no meio da celula e nao encostado na linha de cima. */
+  vertical-align: middle;
+
+  /*
+    Sem quebra de linha dentro das tabelas.
+    Vale tanto para a coluna de titulos ("Technician Name:", "IBAN:", ...)
+    quanto para a coluna de dados e para as tabelas de projetos e custos:
+    cada celula fica sempre em uma unica linha.
+
+    Consequencia a ter em mente ao editar: um texto mais comprido que a
+    largura da coluna passa a ser cortado em vez de descer para a linha de
+    baixo. Se isso acontecer, aumente a largura da coluna no <colgroup> do
+    index.html em vez de deixar o texto quebrar.
+
+    Os paragrafos fora das tabelas (endereco, itens "I confirm that:",
+    assinatura) continuam quebrando normalmente.
+  */
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ----------------------------------------------------------------------------
+   Tabelas de informacao (emissor, pagamento, fatura)
+   Borda cinza de 0,25pt em todos os lados; celulas no estilo "Sem Espacamento".
+   -------------------------------------------------------------------------- */
+.tabela-info {
+  width: var(--tabela-largura);
+}
+
+.tabela-info td {
+  border: var(--borda-cinza-espessura) solid var(--borda-cinza);
+  line-height: var(--linha-simples);
+}
+
+.col-rotulo { width: 99.25pt; }   /* 1985 twips */
+.col-valor  { width: 423.55pt; }  /* 8471 twips */
+
+/* ----------------------------------------------------------------------------
+   Tabelas em grade (projetos e custos)
+   Borda preta de 0,5pt (estilo "Tabela com Grade" do Word).
+   Dentro das celulas os paragrafos sao do estilo Normal, por isso mantem
+   os 8pt de espaco depois - e o que deixa estas linhas mais altas.
+   -------------------------------------------------------------------------- */
+.tabela-grade th,
+.tabela-grade td {
+  border: var(--borda-preta-espessura) solid var(--borda-preta);
+  /* O Word reserva 8pt abaixo do paragrafo dentro destas celulas, o que
+     empurrava todo o texto para cima. Aqui o mesmo espaco e dividido em
+     partes iguais entre cima e baixo: a altura total da celula continua
+     exatamente a mesma do original e o texto fica centralizado. */
+  padding-top: calc(var(--espaco-depois) / 2);
+  padding-bottom: calc(var(--espaco-depois) / 2);
+  line-height: var(--linha-normal);
+  vertical-align: middle;
+  text-align: center;
+}
+
+.tabela-projetos { width: var(--tabela-projetos-largura); }
+.tabela-custos   { width: 522.5pt;  }  /* 10450 twips */
+
+/* Cabecalhos cinza */
+.tabela-grade thead td {
+  background: var(--cabecalho-fundo);
+}
+
+/* Na tabela de custos o cabecalho tem borda inferior cinza */
+.tabela-custos thead td {
+  border-bottom: var(--borda-cinza-espessura) solid var(--borda-cinza);
+}
+
+/* ...e as linhas de dados tem todas as bordas cinza */
+.tabela-custos tbody td {
+  border: var(--borda-cinza-espessura) solid var(--borda-cinza);
+}
+
+/* A primeira coluna da tabela de custos e alinhada a esquerda */
+.tabela-custos tbody td:first-child {
+  text-align: left;
+}
+
+/*
+  Linha de total: as duas primeiras celulas ficam sem borda (apenas o traco
+  superior), a terceira mostra "Total:" a direita e a quarta fica emoldurada.
+  Os seletores incluem ".tabela-custos" para terem prioridade sobre a regra
+  geral ".tabela-custos tbody td" definida acima.
+*/
+.tabela-custos .linha-total td {
+  border: none;
+  border-top: var(--borda-cinza-espessura) solid var(--borda-cinza);
+}
+
+.tabela-custos .linha-total .celula-rotulo-total {
+  border-right: var(--borda-cinza-espessura) solid var(--borda-cinza);
+  font-weight: bold;
+  text-align: right;
+}
+
+.tabela-custos .linha-total .celula-valor-total {
+  border: var(--borda-cinza-espessura) solid var(--borda-cinza);
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------------------------
+   Impressao - remove o fundo cinza e as sombras da tela
+   -------------------------------------------------------------------------- */
+@page {
+  size: A4;
+  margin: 12.7mm;   /* mesmo valor de --pagina-margem (regras @page nao
+                       aceitam variaveis CSS) */
+}
+
+@media print {
+  body {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .pagina {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+}

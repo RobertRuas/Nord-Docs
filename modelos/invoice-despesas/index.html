@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--
+    ============================================================================
+    INVOICE DE DESPESAS - reproducao fiel do arquivo "invoice_014.docx"
+    ============================================================================
+    Esta pasta contem apenas o que e proprio deste modelo:
+
+      dados.json        CONTEUDO. Todo o texto do documento, em JSON puro.
+                        E o unico arquivo a editar para trocar valores.
+      index.html        ESTRUTURA (este arquivo): a ordem dos blocos, as
+                        tabelas vazias e a largura de cada coluna.
+      modelo.js         CONFIGURACAO deste modelo (poucas linhas).
+      variacao.css      as medidas que diferem da outra fatura.
+
+    O comportamento vem de /app/js e o desenho de /app/tipos/fatura.
+
+    COMO ABRIR: pelo atalho "abrir.command" da pasta Nord, que sobe um
+    servidor local e abre a pagina de modelos. A pagina le o dados.json com
+    fetch(), e os navegadores bloqueiam fetch() em paginas abertas com duplo
+    clique (endereco file://).
+
+    O QUE DA PARA FAZER AQUI:
+      Editar      liga a edicao direto no documento (atalho Ctrl/Cmd + E)
+      Importar    carrega um dados.json de qualquer lugar do computador
+      Exportar    baixa o dados.json com as alteracoes feitas
+      Gerar PDF   abre a impressao do navegador (atalho Ctrl/Cmd + P)
+      Descartar   volta ao conteudo original do arquivo
+    ============================================================================
+  -->
+
+  <title>Invoice de Despesas</title>
+
+  <!-- Estilo do tipo de documento, depois as variacoes deste modelo -->
+  <link rel="stylesheet" href="../../app/tipos/fatura/fatura.css">
+  <link rel="stylesheet" href="variacao.css">
+
+  <!-- Estilo da interface (nao entra no PDF) -->
+  <link rel="stylesheet" href="../../app/css/interface.css">
+  <link rel="stylesheet" href="../../app/css/edicao.css">
+</head>
+
+<body>
+
+<!--
+  Barra de ferramentas.
+  Nao faz parte do documento e nunca aparece no PDF (ver css/interface.css).
+  Os identificadores abaixo sao os que js/barra.js procura.
+-->
+<div class="barra-ferramentas" role="toolbar" aria-label="Ferramentas do documento">
+  <a class="link-voltar" href="../../index.html" title="Voltar para a lista de modelos">&larr; Modelos</a>
+  <span class="separador-barra"></span>
+
+  <button type="button" class="botao-barra" id="acao-editar" title="Editar o documento (Ctrl/Cmd + E)">Editar</button>
+  <span class="separador-barra"></span>
+
+  <button type="button" class="botao-barra" id="acao-importar" title="Carregar um arquivo dados.json">Importar</button>
+  <button type="button" class="botao-barra" id="acao-exportar" title="Baixar o dados.json com as alteracoes">Exportar</button>
+  <span class="separador-barra"></span>
+
+  <button type="button" class="botao-barra" id="acao-pdf" title="Gerar PDF (Ctrl/Cmd + P)">Gerar PDF</button>
+  <button type="button" class="botao-barra" id="acao-descartar" title="Voltar ao conteudo original do arquivo">Descartar</button>
+
+  <output class="aviso-barra" id="aviso-alteracoes" aria-live="polite"></output>
+</div>
+
+<!--
+  <main class="pagina"> representa a folha A4 do Word.
+  Tamanho e margens vem das variaveis --pagina-* em css/documento.css
+  (original: 11906 x 16838 twips, margens de 720 twips = 12,7 mm).
+-->
+<main class="pagina" id="documento">
+
+  <!-- ===== Titulo centralizado, negrito, 22pt (sz=44 meios-pontos) ===== -->
+  <h1 class="titulo" data-campo="titulo"></h1>
+
+  <!-- ===== Bloco 1: dados do tecnico/emissor =====
+       Tabela de 2 colunas (1985 + 8471 twips) com borda cinza fina.
+       As linhas sao geradas por app/tipos/fatura/montagem.js. -->
+  <table class="tabela-info">
+    <colgroup>
+      <col class="col-rotulo">
+      <col class="col-valor">
+    </colgroup>
+    <tbody data-lista="emissor"></tbody>
+  </table>
+
+  <!-- Paragrafo vazio (estilo "Sem Espacamento") que separa as tabelas -->
+  <p class="par-simples">&nbsp;</p>
+
+  <!-- ===== Bloco 2: dados bancarios ===== -->
+  <table class="tabela-info">
+    <colgroup>
+      <col class="col-rotulo">
+      <col class="col-valor">
+    </colgroup>
+    <tbody data-lista="pagamento"></tbody>
+  </table>
+
+  <p class="par-simples">&nbsp;</p>
+
+  <!-- ===== Bloco 3: numero, data e periodo da fatura ===== -->
+  <table class="tabela-info">
+    <colgroup>
+      <col class="col-rotulo">
+      <col class="col-valor">
+    </colgroup>
+    <tbody data-lista="fatura"></tbody>
+  </table>
+
+  <p class="par-simples">&nbsp;</p>
+
+  <!-- ===== Bloco 4: destinatario da fatura ===== -->
+  <p class="par-normal negrito" data-campo="destinatarioTitulo"></p>
+  <p class="par-simples" data-campo="destinatarioLinha1"></p>
+
+  <!--
+    No Word, dois paragrafos seguidos com a MESMA borda inferior sao
+    agrupados e a linha e desenhada apenas no final do grupo.
+    Por isso os dois paragrafos abaixo ficam dentro de um unico
+    <div class="grupo-com-borda"> que recebe a borda.
+  -->
+  <div class="grupo-com-borda">
+    <p class="par-simples" data-campo="destinatarioLinha2"></p>
+    <p class="par-simples">&nbsp;</p>
+  </div>
+
+  <p class="par-simples">&nbsp;</p>
+
+  <!-- ===== Bloco 5: detalhes dos projetos =====
+       Larguras do original: 2142 / 2101 / 2112 / 2109 / 1992 twips. -->
+  <p class="par-normal negrito" data-campo="projetosTitulo"></p>
+  <table class="tabela-grade tabela-projetos">
+    <colgroup>
+      <col style="width: 107.1pt">
+      <col style="width: 105.05pt">
+      <col style="width: 105.6pt">
+      <col style="width: 105.45pt">
+      <col style="width: 99.6pt">
+    </colgroup>
+    <thead data-cabecalho="projetos"></thead>
+    <tbody data-lista="projetos"></tbody>
+  </table>
+  <!-- Area do botao "+ linha"; so aparece no modo de edicao -->
+  <div data-controles="projetos.linhas"></div>
+
+  <p class="par-simples">&nbsp;</p>
+
+  <!-- ===== Bloco 6: horas e custos =====
+       Larguras do original: 2614 / 2614 / 2608 / 2614 twips. -->
+  <p class="par-normal negrito" data-campo="custosTitulo"></p>
+  <table class="tabela-grade tabela-custos">
+    <colgroup>
+      <col style="width: 130.7pt">
+      <col style="width: 130.7pt">
+      <col style="width: 130.4pt">
+      <col style="width: 130.7pt">
+    </colgroup>
+    <thead data-cabecalho="custos"></thead>
+    <tbody data-lista="custos"></tbody>
+  </table>
+  <div data-controles="custos.linhas"></div>
+
+  <!-- ===== Bloco 7: declaracao de conformidade =====
+       Neste documento o texto vem logo apos a tabela, sem linha em branco. -->
+  <p class="par-normal" data-campo="confirmacaoTitulo"></p>
+  <div data-lista="confirmacao"></div>
+  <div data-controles="confirmacao.itens"></div>
+
+  <p class="par-normal">&nbsp;</p>
+
+  <!-- ===== Bloco 8: assinatura ===== -->
+  <p class="par-normal" data-campo="assinaturaLinha"></p>
+  <p class="par-normal" data-campo="assinaturaData"></p>
+
+</main>
+
+<!-- Modulo ES. Comece a leitura por modelo.js, que tem a configuracao. -->
+<script type="module" src="modelo.js"></script>
+</body>
+</html>
