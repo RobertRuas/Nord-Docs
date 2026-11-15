@@ -21,10 +21,24 @@ abre a página central no navegador e lista os modelos.
 > diretamente mostra um aviso explicando isso. No GitHub Pages o problema não
 > existe, porque lá o site já é servido por HTTP.
 
-## Dados de exemplo
+## Documentos em branco
 
-Os arquivos `dados.json` publicados aqui contêm **dados fictícios**, porque o
-GitHub Pages é público e indexável.
+Os três modelos vêm **vazios**: os rótulos, os títulos de coluna, os textos
+fixos e a quantidade de linhas estão no lugar, mas nenhum campo tem valor.
+É só preencher.
+
+O botão **Limpar** devolve o documento a esse mesmo estado a qualquer momento.
+Os `dados.json` publicados foram gerados pelos próprios módulos de limpeza
+([`app/tipos/fatura/limpeza.js`](app/tipos/fatura/limpeza.js) e
+[`app/tipos/planilha/limpeza.js`](app/tipos/planilha/limpeza.js)), então
+"documento em branco" tem uma definição só em todo o projeto.
+
+No timesheet, começar em branco significa que o campo **Week** está vazio —
+logo os blocos dos sete dias nascem travados até você informar a semana.
+
+## Dados reais ficam fora do Git
+
+O GitHub Pages é público e indexável, e o histórico do Git é permanente.
 
 Para trabalhar com dados reais, mantenha-os fora do Git: qualquer arquivo
 terminado em `.local.json` é ignorado pelo `.gitignore`. O fluxo é:
@@ -68,6 +82,7 @@ Nord/
 │   │   ├── pdf.js           geração do PDF
 │   │   ├── barra.js         botões do topo da página
 │   │   ├── caminho.js       ler/escrever valores por caminho
+│   │   ├── limpeza.js       esvaziar valores mantendo a estrutura
 │   │   ├── datas.js         formato dd/mm/aaaa e data de hoje
 │   │   ├── nomes.js         nome amigável dos arquivos gerados
 │   │   ├── dom.js           criar campos, células, linhas e botões
@@ -101,6 +116,7 @@ Cada pasta em `modelos/` contém só o que é próprio daquele documento:
 | **Importar**  | —              | carrega um `dados.json` de qualquer pasta        |
 | **Exportar**  | —              | baixa o JSON com nome amigável (ver abaixo)      |
 | **Gerar PDF** | `Ctrl/Cmd + P` | abre a impressão do navegador ("Salvar como PDF")|
+| **Limpar**    | —              | apaga o conteúdo de todos os campos              |
 | **Descartar** | —              | volta ao conteúdo original do arquivo            |
 | **Zoom**      | `Ctrl/Cmd + - 0` ou `Ctrl/Cmd` + roda | só no timesheet       |
 
@@ -132,8 +148,8 @@ calculadas pelo padrão **ISO-8601** (a semana começa na segunda e a semana 1
 faziam.
 
 - Digitar uma semana nova recalcula as sete datas ao sair do campo.
-- A semana é validada contra o ano do documento (campo `ano` no `dados.json`):
-  2026 tem 53 semanas, 2027 tem 52.
+- A semana é validada contra o ano do documento (campo `ano` no `dados.json`;
+  se faltar, vale o ano corrente): 2026 tem 53 semanas, 2027 tem 52.
 - Enquanto a semana for inválida, **os blocos dos sete dias ficam travados**
   para edição e uma faixa explica o motivo. O cabeçalho e as assinaturas
   seguem editáveis.
@@ -181,6 +197,7 @@ Alguns ajustes foram pedidos e se afastam de propósito do original:
 - o texto das células não quebra linha e fica centralizado verticalmente, com
   um pequeno respiro interno que não altera a altura das células;
 - a assinatura e o nome do técnico saíram do bloco de assinatura;
+- os documentos vêm em branco, prontos para preencher;
 - a data ao lado da assinatura passou a ser automática;
 - as datas dos sete dias passaram a ser calculadas pela semana, em ISO-8601.
 

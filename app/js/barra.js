@@ -19,6 +19,7 @@ function localizarElementos() {
     importar:  document.getElementById('acao-importar'),
     exportar:  document.getElementById('acao-exportar'),
     pdf:       document.getElementById('acao-pdf'),
+    limpar:    document.getElementById('acao-limpar'),
     descartar: document.getElementById('acao-descartar'),
     aviso:     document.getElementById('aviso-alteracoes')
   };
@@ -30,6 +31,7 @@ function localizarElementos() {
  *          aoImportar: function(): void,
  *          aoExportar: function(): void,
  *          aoGerarPdf: function(): void,
+ *          aoLimpar: function(): void,
  *          aoDescartar: function(): void}} acoes
  * @returns {{atualizar: function({editando: boolean, alterado: boolean}): void,
  *            avisar: function(string, string): void}}
@@ -48,6 +50,9 @@ export function criarBarra(acoes) {
   }
   if (elementos.pdf) {
     elementos.pdf.addEventListener('click', acoes.aoGerarPdf);
+  }
+  if (elementos.limpar) {
+    elementos.limpar.addEventListener('click', acoes.aoLimpar);
   }
   if (elementos.descartar) {
     elementos.descartar.addEventListener('click', acoes.aoDescartar);

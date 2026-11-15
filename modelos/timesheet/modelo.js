@@ -9,6 +9,7 @@
 import { iniciarAplicacao } from '../../app/js/aplicacao.js';
 import { montarPlanilha, semanaValida, numeroDaSemana, SECOES }
   from '../../app/tipos/planilha/montagem.js';
+import { limparPlanilha } from '../../app/tipos/planilha/limpeza.js';
 import { iniciarZoom, recalcularZoom } from '../../app/tipos/planilha/zoom.js';
 
 iniciarAplicacao({
@@ -18,9 +19,14 @@ iniciarAplicacao({
   raiz: document.getElementById('corpo-planilha'),
   montar: montarPlanilha,
 
-  /* Nome do JSON exportado e do PDF, ex.: "Timesheet-Semana-45-2026" */
+  /* Esvazia os valores e mantem rotulos, colunas e linhas no lugar */
+  limpar: limparPlanilha,
+
+  /* Nome do JSON exportado e do PDF, ex.: "Timesheet-Semana-45-2026".
+     Sem semana informada o nome fica apenas "Timesheet". */
   nomeArquivo: function (dados) {
-    return 'Timesheet Semana ' + (numeroDaSemana() || 'sem-semana') + ' ' + dados.ano;
+    const semana = numeroDaSemana();
+    return semana ? 'Timesheet Semana ' + semana + ' ' + dados.ano : 'Timesheet';
   },
 
   /* Os blocos dos sete dias so podem ser editados depois que o numero da

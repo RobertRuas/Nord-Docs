@@ -14,7 +14,7 @@
    contra o ano do documento - semana 53 em um ano de 52 semanas e recusada.
    ============================================================================ */
 
-import { formatarData } from '../../js/datas.js';
+import { formatarData, anoAtual } from '../../js/datas.js';
 
 /** Rotulo do campo que guarda o numero da semana na planilha */
 const ROTULO_SEMANA = 'Week';
@@ -78,6 +78,18 @@ function campoDaSemana(dados) {
 }
 
 /**
+ * Ano do documento. Fica gravado no dados.json para que a folha continue
+ * mostrando as mesmas datas quando for reaberta no ano seguinte; se o campo
+ * faltar ou nao for um numero, vale o ano corrente.
+ * @param {object} dados
+ * @returns {number}
+ */
+function anoDoDocumento(dados) {
+  const ano = Number(dados.ano);
+  return Number.isInteger(ano) && ano > 1900 ? ano : anoAtual();
+}
+
+/**
  * Confere o numero da semana informado no documento.
  * @param {object} dados
  * @returns {{valida: boolean, numero: number|null, mensagem: string}}
@@ -85,7 +97,8 @@ function campoDaSemana(dados) {
 export function validarSemana(dados) {
   const campo = campoDaSemana(dados);
   const bruto = campo ? String(campo.valor).trim() : '';
-  const total = semanasNoAno(dados.ano);
+  const ano = anoDoDocumento(dados);
+  const total = semanasNoAno(ano);
 
   if (bruto === '') {
     return {
@@ -104,7 +117,7 @@ export function validarSemana(dados) {
   if (numero < 1 || numero > total) {
     return {
       valida: false, numero: null,
-      mensagem: 'O ano de ' + dados.ano + ' tem ' + total +
+      mensagem: 'O ano de ' + ano + ' tem ' + total +
                 ' semanas. Valor informado: ' + numero + '.'
     };
   }
@@ -124,7 +137,7 @@ export function aplicarSemana(dados) {
   const resultado = validarSemana(dados);
 
   if (resultado.valida) {
-    const datas = datasDaSemana(dados.ano, resultado.numero);
+    const datas = datasDaSemana(anoDoDocumento(dados), resultado.numero);
     dados.dias.forEach(function (dia, indice) {
       dia.data = datas[indice];
     });

@@ -68,6 +68,7 @@ function mostrarErro(raiz, erro, arquivo) {
  *          secoesObrigatorias: Array<string>, raiz: HTMLElement,
  *          montar: function(object): void,
  *          nomeArquivo: function(object): string,
+ *          limpar: function(object): void,
  *          aoDesenhar?: function(): void,
  *          campoBloqueado?: function(string): boolean}} config
  *        arquivoDados       -> nome do JSON ao lado do index.html
@@ -76,6 +77,7 @@ function mostrarErro(raiz, erro, arquivo) {
  *        raiz               -> elemento que contem o documento
  *        montar             -> desenha o documento a partir dos dados
  *        nomeArquivo        -> nome amigavel do JSON exportado e do PDF
+ *        limpar             -> esvazia os valores mantendo a estrutura
  *        aoDesenhar         -> chamado apos cada desenho (opcional)
  *        campoBloqueado     -> recebe o caminho e devolve true para travar
  * @returns {Promise<void>}
@@ -187,6 +189,19 @@ export async function iniciarAplicacao(config) {
     });
   }
 
+  /** Esvazia o documento, mantendo rotulos, colunas e linhas no lugar. */
+  function limpar() {
+    if (!window.confirm('Apagar o conteudo de todos os campos deste documento?\n\n' +
+                        'Os rotulos e a estrutura continuam; so os valores sao ' +
+                        'apagados. Use "Descartar" depois para voltar ao arquivo.')) {
+      return;
+    }
+    config.limpar(dados);
+    redesenhar();
+    registrarAlteracao();
+    barra.avisar('Documento limpo.');
+  }
+
   /** Volta ao conteudo do arquivo, descartando as edicoes. */
   function descartar() {
     if (!foiAlterado()) {
@@ -250,6 +265,7 @@ export async function iniciarAplicacao(config) {
       aoImportar: importar,
       aoExportar: exportar,
       aoGerarPdf: imprimir,
+      aoLimpar: limpar,
       aoDescartar: descartar
     });
 

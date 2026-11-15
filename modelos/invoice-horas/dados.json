@@ -3,65 +3,65 @@
   "emissor": [
     {
       "rotulo": "Technician Name:",
-      "valor": "A. Example"
+      "valor": ""
     },
     {
       "rotulo": "Company Name:",
-      "valor": "A. Example"
+      "valor": ""
     },
     {
       "rotulo": "Email:",
-      "valor": "contact@example.com"
+      "valor": ""
     },
     {
       "rotulo": "Address:",
-      "valor": "Example Street 1, 1000-001 Lisboa, Portugal"
+      "valor": ""
     },
     {
       "rotulo": "VAT:",
-      "valor": "000 000 000"
+      "valor": ""
     },
     {
       "rotulo": "Tel:",
-      "valor": "+351 900 000 000"
+      "valor": ""
     }
   ],
   "pagamento": [
     {
       "rotulo": "IBAN Name:",
-      "valor": "A. Example"
+      "valor": ""
     },
     {
       "rotulo": "IBAN:",
-      "valor": "PT50 0000 0000 0000 0000 0000 0"
+      "valor": ""
     },
     {
       "rotulo": "SWIFT / BIC:",
-      "valor": "EXAMPLXX"
+      "valor": ""
     },
     {
       "rotulo": "Currency:",
-      "valor": "EUR"
+      "valor": ""
     }
   ],
   "fatura": [
     {
       "rotulo": "Inovice Number:",
-      "valor": "015"
+      "valor": ""
     },
     {
       "rotulo": "Invoice Date:",
-      "valor": "08/11/2026"
+      "valor": ""
     },
     {
       "rotulo": "Billing Period:",
-      "valor": "11/10/2026 to 08/11/2026"
+      "valor": ""
     }
   ],
   "destinatario": {
     "titulo": "Invoice to:",
-    "endereco": "Example Client Oy - Example Road 26 - 00000 Example City, Finland",
-    "contato": "Contact: www.example.com | info@example.com  | Tel: +358 (0)00 000 0000"
+    "endereco": "",
+    "contato": ""
   },
   "projetos": {
     "titulo": "Projects Details:",
@@ -89,18 +89,18 @@
     ],
     "linhas": [
       {
-        "nome": "SCOPE 0001",
-        "funcao": "TL IRATA L3",
-        "inicio": "11/10/2026",
-        "fim": "08/11/2026",
-        "local": "Example Site, DE"
+        "nome": "",
+        "funcao": "",
+        "inicio": "",
+        "fim": "",
+        "local": ""
       },
       {
-        "nome": "-",
-        "funcao": "-",
-        "inicio": "-",
-        "fim": "-",
-        "local": "-"
+        "nome": "",
+        "funcao": "",
+        "inicio": "",
+        "fim": "",
+        "local": ""
       }
     ]
   },
@@ -126,21 +126,21 @@
     ],
     "linhas": [
       {
-        "descricao": "Work Hours",
-        "quantidade": "200",
-        "taxa": "40,00",
-        "valor": "8.000,00"
+        "descricao": "",
+        "quantidade": "",
+        "taxa": "",
+        "valor": ""
       },
       {
-        "descricao": "Stand-by Hours",
-        "quantidade": "30",
-        "taxa": "25,00",
-        "valor": "750,00"
+        "descricao": "",
+        "quantidade": "",
+        "taxa": "",
+        "valor": ""
       }
     ],
     "total": {
       "rotulo": "Total:",
-      "valor": "8.750,00"
+      "valor": ""
     }
   },
   "confirmacao": {
